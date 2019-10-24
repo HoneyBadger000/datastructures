@@ -1,12 +1,15 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm>            // For sort(), binary_search()
 
 using namespace std;
 
 class Student{
+private:
+    int id;
+
 public:
-int id;
+
     Student(){
         id = 0xFF;
         cout << "Student constructor " << "id is " << id << endl;
@@ -17,9 +20,20 @@ int id;
         cout << "Student constructor " << "id is " << id << endl;
     }
 
-    bool operator<(Student const &obj){
+    bool operator<(Student const &obj) {
         return ((id) < (obj.id));
     };
+
+    int getStudentId() const{
+        return this->id;
+    }
+};
+
+class comparator{
+public:
+    bool operator()(const Student& lhs, const Student& rhs){
+        return lhs.getStudentId() > rhs.getStudentId();
+    }
 };
 
 int main(){
@@ -47,15 +61,34 @@ int main(){
     v.push_back(5);
 
     cout << "vector size is " << v.size() << endl;
-    cout << "Operator < oerloaded sort:" << endl;
+    cout << "Operator < overloaded sort:" << endl;
 
     sort(v.begin(), v.end());   /* Default sort algorithm sorts it in ascending order, 
                                     but here as it is a class and not basic data type, 
                                     sorting would use the oerloaded function instead and sort aaccordingly */
     for(int i=0; i<v.size(); ++i)
-        cout << v[i].id << " " << endl;
+        cout << v[i].getStudentId() << " " << endl;
 
-    cout << "sort by a function :" << endl ;
+    cout << "sort by a custom comparator function :" << endl ;
+    sort(v.begin(),v.end(),comparator());
+
+    for(int i=0; i<v.size(); ++i)
+        cout << v[i].getStudentId() << " " << endl;
+
+    cout << "Sort by a Lambda function : " << endl;
+
+    sort(v.begin(), v.end(), [](const Student & st1, const Student & st2)
+        { return(st1.getStudentId() > st2.getStudentId());
+        });
+
+    for(int i=0; i<v.size(); ++i)
+        cout << v[i].getStudentId() << " " << endl;
+
+    cout << "Binary search : Search for an element " << endl;
+
+    // Doesnt work, come back later
+    //Student newStd(10);
+    //cout << "Student with Id 10 is : " << binary_search(v.begin(), v.end() ,const_cast<Student&>(newStd) << endl;
 
 
 
