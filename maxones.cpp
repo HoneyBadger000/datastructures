@@ -46,7 +46,7 @@ class maxones_efficient{
                     int current_l = 1;
                     int r = i+1;
 
-                    while(nums[r] == 1)
+                    while( (r<n) && (nums[r] == 1))
                     {
                         ++current_l;
                         ++r;
