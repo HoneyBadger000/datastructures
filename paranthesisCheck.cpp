@@ -40,30 +40,64 @@ class checkParanthesis{
 class paranthesis_stack{
     public :
 
-    bool checkparanthesis (string str)
+    bool checkValidString (string str)
     {
-        stack<char> s;
-        if(s.size() == 0)
+        if(str.size() == 0)
             return true;
 
-        if(s.size() == 1)
+        if(str.size() == 1)
             return false;
 
-        if
+        int n = str.size();
+        stack<char> st;
+        // if first element in str is ) || } || ] return flase
+
+        if(str[0] ==')' || str[0] == ']' || str[0]  == '}'){
+            return false;
+        }
+        else{
+            st.push(str[0]);
+        }
+
+        for(int i=1 ; i<n ; i++){
+            if(str[i] == ')' || str[i] == '}' || str[i] == ']'){
+                if(st.empty()){
+                    return false;
+                }
+                else{
+                    if((st.top()== '{' && str[i]== '}') || (st.top() == '(' && str[i] == ')') || (st.top()== '{' && str[i] == '}')){
+                        st.pop();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                    
+                }
+            }
+            else{
+                st.push(str[i]);
+            }
+        }
+
+        if(st.empty()) return true;
+        else return false;
+
 
     }
 };
 
 int main()
 {
-    checkParanthesis obj;
+    //checkParanthesis obj;
+    paranthesis_stack obj;
 
     string input1 = "(){}(}(){}";
     string input2 = "(){}()(){}";
-    string input3 = "(){}[](){}";
+    string input3 = "(){}{}";
 
     cout << "(){}(}(){} : " <<  obj.checkValidString(input1) << endl;
     cout << "(){}()(){} : " <<  obj.checkValidString(input2) << endl;
-    cout << "(){}[](){} : " <<  obj.checkValidString(input3) << endl;
+    cout << "(){}{} : " <<  obj.checkValidString(input3) << endl;
 
 }
