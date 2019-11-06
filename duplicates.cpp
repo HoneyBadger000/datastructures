@@ -45,7 +45,7 @@ class duplicates_efficient{
             }
             else{
                 // Number isnt already there, add it now
-                hash_map.insert(make_pair(nums[i],i));
+                hash_map[nums[i]] = i;
             }
             
         }
